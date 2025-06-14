@@ -125,20 +125,20 @@ static void rgb_init_sensor(SensorPort_t* sensorPort);
 
 static uint8_t pca9633tk_init_sequence[] =
 {
-    0x91, /* PCA9633TK_REG_MODE1      */
-    0x01, /* PCA9633TK_REG_MODE2      */
-    0x5A, /* PCA9633TK_REG_PWM0       */
-    0x5A, /* PCA9633TK_REG_PWM1       */
-    0x5A, /* PCA9633TK_REG_PWM2       */
-    0x5A, /* PCA9633TK_REG_PWM3       */
-    0xFF, /* PCA9633TK_REG_GRPPWM     */
-    0x00, /* PCA9633TK_REG_GRPFREQ    */
-    0xAA, /* PCA9633TK_REG_LEDOUT     */
-    0xE2, /* PCA9633TK_REG_SUBADR1    */
-    0xE4, /* PCA9633TK_REG_SUBADR2    */
-    0xE8, /* PCA9633TK_REG_SUBADR3    */
-    0xE0, /* PCA9633TK_REG_ALLCALLADR */
-    0x81, /* PCA9633TK_REG_MODE1      */
+    0x91, /* PCA9633TK_REG_MODE1         */
+    0x01, /* PCA9633TK_REG_MODE2         */
+    0x13, /* PCA9633TK_REG_PWM0 - TOP    */
+    0x13, /* PCA9633TK_REG_PWM1 - LEFT   */
+    0x13, /* PCA9633TK_REG_PWM2 - RIGHT  */
+    0x13, /* PCA9633TK_REG_PWM3 - MIDDLE */
+    0xFF, /* PCA9633TK_REG_GRPPWM        */
+    0x00, /* PCA9633TK_REG_GRPFREQ       */
+    0xAA, /* PCA9633TK_REG_LEDOUT        */
+    0xE2, /* PCA9633TK_REG_SUBADR1       */
+    0xE4, /* PCA9633TK_REG_SUBADR2       */
+    0xE8, /* PCA9633TK_REG_SUBADR3       */
+    0xE0, /* PCA9633TK_REG_ALLCALLADR    */
+    0x81, /* PCA9633TK_REG_MODE1         */
 };
 
 static uint8_t pca9633tk_deinit_sequence[] =
