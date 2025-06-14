@@ -178,6 +178,7 @@ def rgb_to_hsv_gray(red, green, blue) -> ColorData:
     v = round(v)
     gray = round(gray)
     name = hsv_to_color_name(h, s, v)
+    log.log(f"\t{sensor}:\tRGB:\t{red}\t{green}\t{blue}\tHSV:\t{h}\t{s}\t{v}\tName:\t{name}") #\tGray:\t{gray}\tVector:\t{vector}
     return ColorData(red, green, blue, h, s, v, gray, name)
 
 
