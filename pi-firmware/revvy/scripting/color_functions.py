@@ -191,6 +191,7 @@ def hsv_to_color_name(hue, saturation, value) -> str:
     return name
 
 
+def rgb_to_hsv_gray(red, green, blue, sensor) -> ColorData:
     r, g, b = red / 255.0, green / 255.0, blue / 255.0
     gray = 0.299 * red + 0.587 * green + 0.114 * blue
     mx = max(r, g, b)

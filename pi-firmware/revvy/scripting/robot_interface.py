@@ -876,10 +876,10 @@ class RobotWrapper:
         sensor_data: ColorSensorReading = self._sensors["color_sensor"].read()
 
         return [
-            rgb_to_hsv_gray(sensor_data.top.r, sensor_data.top.g, sensor_data.top.b),
-            rgb_to_hsv_gray(sensor_data.left.r, sensor_data.left.g, sensor_data.left.b),
-            rgb_to_hsv_gray(sensor_data.right.r, sensor_data.right.g, sensor_data.right.b),
-            rgb_to_hsv_gray(sensor_data.middle.r, sensor_data.middle.g, sensor_data.middle.b),
+            rgb_to_hsv_gray(sensor_data.top.r, sensor_data.top.g, sensor_data.top.b, "Top"),
+            rgb_to_hsv_gray(sensor_data.left.r, sensor_data.left.g, sensor_data.left.b, "Left"),
+            rgb_to_hsv_gray(sensor_data.right.r, sensor_data.right.g, sensor_data.right.b, "Right"),
+            rgb_to_hsv_gray(sensor_data.middle.r, sensor_data.middle.g, sensor_data.middle.b, "Middle"),
         ]
 
     def get_color_by_user_channel(self, user_channel) -> ColorData:
