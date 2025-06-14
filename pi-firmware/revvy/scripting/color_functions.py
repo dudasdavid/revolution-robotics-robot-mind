@@ -22,11 +22,13 @@ ColorDataUndefined = ColorData(r=0, g=0, b=0, h=0, s=0, v=0, gray=0, name="undef
 
 color_name_map = {
     "red": 0xFF0000,
+    "orange": 0xFF5000,
     "yellow": 0xFFFF00,
     "green": 0x00FF00,
     "cyan": 0x00FFFF,
     "blue": 0x0000FF,
     "magenta": 0xFF00FF,
+    "purple": 0x7F00FF,
     "black": 0x000000,
     "gray": 0x7F7F7F,
     "white": 0xFFFFFF,
@@ -116,38 +118,79 @@ def hsv_to_color_name(hue, saturation, value) -> str:
     # value - from black to full color, in range 0-100 (%)
 
     # If not saturated we go for one of the gray colors
-    if saturation < 14:
-        if value <= 50:
-            return "black"
-        if value <= 75:
-            return "gray"
-        return "white"
+    #if saturation < 18:
+    #    if value <= 28:
+    #        return "black"
+    #    if value <= 75:
+    #        return "gray"
+    #    return "white"
 
     # If color is saturated, but value is close to black, select black,
     # without selecting from one of gray colors
-    if value < 30:
+    #if value < 20:
+    #    return "black"
+
+    # No sensor attached
+    if hue == 0 and saturation < 10:
         return "black"
+
+    # This might be LED dependent, this one has a stable hue around 200 deg on every grayscale background
+    if hue >= 170 and hue < 220 and value < 90 and saturation < 10:
+        return "black"
+
+    if hue >= 170 and hue < 250 and saturation < 50:
+        if value < 12:
+            return "black"
+        elif value < 40:
+            return "gray"
+        else:
+            return "white"
 
     # These 6 color names are evenly distrubuted across a color circle
     # 360 / 6 - gives 60 degrees range for each of the color
     # 100% red is 0 as well as 360, 100% yellow is 60, green is 120, etc
-    names = ["red", "yellow", "green", "cyan", "blue", "magenta"]
-    num_steps = len(names)
-    step = int(360 / num_steps)
+    #names = ["red", "yellow", "green", "cyan", "blue", "magenta"]
+    #num_steps = len(names)
+    #step = int(360 / num_steps)
 
     # We start from 'red' instead of checking all the time if value is
     # more than 360 - 60/2
-    for i in range(num_steps):
-        cmp_color = step * (i + 0.5)
-        if hue < cmp_color:
-            return names[i]
+    #for i in range(num_steps):
+    #    cmp_color = step * (i + 0.5)
+    #    if hue < cmp_color:
+    #        return names[i]
 
     # max cmp_color is 330 (5.5 * 60), if loop is completed, value is
     # in range [330, 360]
-    return names[0]
+    #return names[0]
+
+    # this shit is cute, but will never work
+
+    if hue >= 0 and hue < 20:
+        name = "red"
+    elif hue >= 20 and hue < 65:
+        name = "orange"
+    elif hue >= 65 and hue < 120:
+        name = "yellow"
+    elif hue >= 120 and hue < 180:
+        name = "green"
+    elif hue >= 180 and hue < 220:
+        name = "cyan"
+    elif hue >= 220 and hue < 245:
+        name = "blue"
+    #elif hue >= 230 and hue < 290:
+    #    name = "purple"
+    elif hue >= 245 and hue < 340:
+        name = "magenta"
+    elif hue >= 340 and hue <= 360:
+        name = "red"
+    else:
+        print("kaka van")
+        name = "white"
+
+    return name
 
 
-def rgb_to_hsv_gray(red, green, blue) -> ColorData:
     r, g, b = red / 255.0, green / 255.0, blue / 255.0
     gray = 0.299 * red + 0.587 * green + 0.114 * blue
     mx = max(r, g, b)
