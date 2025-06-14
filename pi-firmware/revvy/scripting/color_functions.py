@@ -32,6 +32,76 @@ color_name_map = {
     "white": 0xFFFFFF,
 }
 
+calibration_table_sensor_0 = {
+    "Top": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": 0, "gain": 1.0},
+        "V": {"offset": 0, "gain": 1.0},
+    },
+    "Left": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": 0, "gain": 1.0},
+        "V": {"offset": 0, "gain": 1.0},
+    },
+    "Right": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": 0, "gain": 1.0},
+        "V": {"offset": 0, "gain": 1.0},
+    },
+    "Middle": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": 0, "gain": 1.0},
+        "V": {"offset": 0, "gain": 1.0},
+    }
+}
+
+calibration_table_sensor_3 = {
+    "Top": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": 0, "gain": 1.0},
+        "V": {"offset": 0, "gain": 1.0},
+    },
+    "Left": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": 6, "gain": 1.0},
+        "V": {"offset": 0, "gain": 1.0},
+    },
+    "Right": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": -3, "gain": 1.0},
+        "V": {"offset": 4, "gain": 1.0},
+    },
+    "Middle": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": 4, "gain": 1.0},
+        "V": {"offset": 0, "gain": 1.0},
+    }
+}
+
+calibration_table_sensor_4 = {
+    "Top": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": -3, "gain": 1.0},
+        "V": {"offset": 0, "gain": 1.0},
+    },
+    "Left": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": 5, "gain": 1.0},
+        "V": {"offset": 8, "gain": 0.9},
+    },
+    "Right": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": 3, "gain": 1.0},
+        "V": {"offset": 5, "gain": 0.9},
+    },
+    "Middle": {
+        "H": {"offset": 0, "gain": 1.0},
+        "S": {"offset": 0, "gain": 1.0},
+        "V": {"offset": 5, "gain": 0.9},
+    }
+}
+
+calibration_table = calibration_table_sensor_0
 
 def color_name_to_rgb(color_name: str):
     try:
@@ -98,6 +168,11 @@ def rgb_to_hsv_gray(red, green, blue) -> ColorData:
     else:
         s = (df / mx) * 100
     v = mx * 100
+
+    h = max(min((h - calibration_table[sensor]["H"]["offset"]) * calibration_table[sensor]["H"]["gain"],360), 0)
+    s = max(min((s - calibration_table[sensor]["S"]["offset"]) * calibration_table[sensor]["S"]["gain"],100), 0)
+    v = max(min((v - calibration_table[sensor]["V"]["offset"]) * calibration_table[sensor]["V"]["gain"],100), 0)
+
     h = round(h)
     s = round(s)
     v = round(v)
